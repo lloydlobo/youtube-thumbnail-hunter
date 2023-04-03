@@ -1,0 +1,17 @@
+# This file ignores build and output directories, Chrome-specific files, and Node.js dependencies. It also ignores .crx and .pem files which are generated during the Chrome extension packaging process. You may need to modify it depending on your specific project setup.
+
+# Ignore build and output directories
+build/
+dist/
+*.crx
+*.pem
+
+# Ignore Chrome-specific files
+Thumbs.db
+*.swp
+.DS_Store
+
+# Ignore Node.js dependencies
+node_modules/
+
+tmp.txt
