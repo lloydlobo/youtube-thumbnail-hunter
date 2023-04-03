@@ -1,8 +1,11 @@
 # YouTube Thumbnail Hunter Chrome Extension
 
-This Chrome extension allows users to replace the thumbnails of YouTube videos
-with random images generated using the [`picsum.photos`](https://picsum.photos/)
-API.
+This is a personal Chrome extension project that allows anyone
+to add effects like blur to the thumbnails OR replace the thumbnails of
+YouTube videos with random images generated using the `picsum.photos` API.
+
+This extension is still a work in progress and may contain bugs or errors.
+Contributions and suggestions for improvement are welcome.
 
 <!--toc:start-->
 
@@ -23,7 +26,8 @@ To use this extension, follow these steps:
 2. Open Google Chrome and navigate to the `chrome://extensions` page.
 3. Turn on "Developer mode" in the top right corner of the page.
 4. Click "Load unpacked" and select the directory where the saved files are present.
-5. Open a YouTube video page and watch as random images replace the thumbnail images.
+5. Open a YouTube video page and watch as random effects (blur by default)
+   get applied to the thumbnail images when you click the extension.
 
 <!-- FUTURE: Chrome Web Store. -->
 <!-- - Install the extension from the Chrome Web Store.  -->
@@ -34,24 +38,24 @@ To use this extension, follow these steps:
 
 ### Scraping thumbnails
 
-The extension works by generating an array of random image URLs of a
-specified size using the [`picsum.photos`](https://picsum.photos/).
-It then selects all the `<img/>`elements in the HTML document of any
-`https://youtube.com/*` web page, and replaces each src attribute with a
-random URL from the randomImages array.
+First, YTH selects all the `<img/>`elements in the HTML document of any
+`https://youtube.com/*` web page:
+
+- The extension works by generating an array of random image URLs of a
+  specified size using the [`picsum.photos`](https://picsum.photos/).
+- Then replaces each src attribute with a random URL from the randomImages array.
 
 ### The lazy-loaded image problem
 
-To handle lazy-loaded images, YouTube Thumbnail Hunter uses a
-[MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-to detect changes in the DOM.
+- To handle lazy-loaded images, YouTube Thumbnail Hunter uses a
+  [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+  to detect changes in the DOM.
+- The observer replaces the attributes of img elements with random
+  values when it detects changes.
+- It watches for new img elements in the entire subtree of document.body.
 
 Without the observer, the images at the top of the page get replaced,
 but the ones loaded next stay the same.
-
-The observer replaces the src attributes of img elements with random URLs from
-a predefined array when it detects changes.
-It watches for new img elements in the entire subtree of document.body.
 
 <details>
   <summary>More</summary>
@@ -68,6 +72,7 @@ It watches for new img elements in the entire subtree of document.body.
 
 - picsum.photos for providing the random image generator API.
 - Intersection Observer API for enabling lazy-loading image replacement.
+- Hasan El Mghari for the idea and starter code.
 - Mozilla Developer Network for their comprehensive documentation on web development.
 
 ## License
