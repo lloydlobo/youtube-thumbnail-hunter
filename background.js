@@ -1,3 +1,21 @@
+const welcome = `
+╱╱╱╱╱╱╭╮╱╱╭╮
+╭┳┳━┳┳┫╰┳┳┫╰┳━╮
+┃┃┃╋┃┃┃╭┫┃┃╋┃┻┫
+┣╮┣━┻━┻━┻━┻━┻━╯
+╰━╯
+╭╮╭╮╱╱╱╱╱╭╮╱╱╱╱╱╱╭╮
+┃╰┫╰┳┳┳━━┫╰┳━┳┳━╮┣╋╮
+┃╭┫┃┃┃┃┃┃┃╋┃┃┃┃╋╰┫┃╰╮
+╰━┻┻┻━┻┻┻┻━┻┻━┻━━┻┻━╯
+╭╮╱╱╱╱╱╭╮
+┃╰┳┳┳━┳┫╰┳━┳┳╮
+┃┃┃┃┃┃┃┃╭┫┻┫╭╯
+╰┻┻━┻┻━┻━┻━┻╯
+Welcome to YoutTube Thumbnail Hunter!`;
+// https://fsymbols.com/text-art/
+console.log(welcome);
+
 // Commit message: Refactor extension icon click event handler and constant declarations
 //
 // Define constants for YouTube URLs and extension badge text
@@ -33,5 +51,7 @@ chrome.action.onClicked.addListener(async (tab) => {
   } else if (nextState === OFF_STATE) {
     await chrome.scripting.removeCSS({ files: [cssFile], target });
     console.info("[INFO] YoutTube Thumbnail Hunter is", "resting");
+  } else {
+    console.error("¯\\_(ツ)_/¯");
   }
 });
