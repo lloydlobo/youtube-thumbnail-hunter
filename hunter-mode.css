@@ -1,5 +1,10 @@
-/* https://github.com/GoogleChrome/chrome-extensions-samples/blob/main/functional-samples/tutorial.focus-mode/focus-mode.css */
+/* Define variables */
+:root {
+  --opacity-reduction-percentage: 90%;
+  --blur-value-in-pixels: 40px;
+}
 
+/* https://github.com/GoogleChrome/chrome-extensions-samples/blob/main/functional-samples/tutorial.focus-mode/focus-mode.css */
 body > .scaffold > :is(top-nav, navigation-rail, side-nav, footer),
 main > :not(:last-child),
 main > :last-child > navigation-tree,
@@ -16,4 +21,18 @@ main > :last-child {
 img {
   outline: 8px solid red;
   border: 8px solid red;
+}
+
+/* Define CSS classes for the image effects */
+.effect-remove {
+  filter: none !important;
+  opacity: 0 !important;
+}
+
+.effect-reduce-transparency {
+  opacity: calc(1 - var(--opacity-reduction-percentage));
+}
+
+.effect-apply-blur {
+  filter: blur(var(--blur-value-in-pixels));
 }

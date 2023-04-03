@@ -18,6 +18,15 @@ const IMAGE_API_URL = "https://picsum.photos";
 const IMAGE_WIDTH = 331;
 const IMAGE_HEIGHT = 186;
 const IMAGE_FORMAT = "webp";
+const CACHE = [];
+const imgSrcMap = {};
+
+const shouldRemoveImages = false;
+const shouldReduceTransparency = true;
+const shouldApplyBlur = true;
+
+const opacityReductionPercentage = 90; // %
+const blurValueInPixels = 40; // px
 
 // Construct the URL for a random image of the desired size.
 const contentImageUrl = `${IMAGE_API_URL}/${IMAGE_WIDTH}/${IMAGE_HEIGHT}.${IMAGE_FORMAT}`;
@@ -38,18 +47,58 @@ function getImgElements() {
 // Get all the <img/> elements in the HTML document of any https://youtube.com/* web page.
 // const docImgs = getImgElements();
 
-// Replace each image's src attribute with a random URL from the `randomImages` array.
-function replaceImgSrcWithRandomUrl(images, urls) {
+// Define CSS classes for the image effects and add or remove them from the images based on the effect options.
+// Define the CSS variables using :root so they can be easily modified globally.
+function applyImageEffects(images, urls) {
   for (let i = 0; i < images.length; i++) {
-    const randIndex = Math.floor(Math.random() * urls.length);
-    images[i].src = urls[randIndex];
+    const randomIndex = Math.floor(Math.random() * urls.length);
+    const randomImageUrl = urls[randomIndex];
+
+    const currentImage = images[i];
+    currentImage.dataset.originalSrc = currentImage.src;
+
+    // Replace each image's src attribute with a random URL from the `randomImages` array.
+    if (shouldRemoveImages) {
+      imgSrcMap[img.src] = img.src;
+      CACHE.push(img.src);
+      currentImage.src = randomImageUrl;
+    } else {
+      if (CACHE.length === images.length) currentImage.src = CACHE[i];
+    }
+
+    if (shouldRemoveImages) {
+      currentImage.classList.add("effect-remove");
+    } else {
+      currentImage.classList.remove("effect-remove");
+    }
+
+    if (shouldReduceTransparency) {
+      currentImage.classList.add("effect-reduce-transparency");
+    } else {
+      currentImage.classList.remove("effect-reduce-transparency");
+    }
+
+    if (shouldApplyBlur) {
+      currentImage.classList.add("effect-apply-blur");
+    } else {
+      currentImage.classList.remove("effect-apply-blur");
+    }
+  }
+}
+
+// Restore the original `src` attributes of all `img` elements on the page,
+// using the `imgSrcMap` object to retrieve the original `src` value for each `img`.
+function restoreImgSrc(images) {
+  for (let i = 0; i < images.length; i++) {
+    const img = images[i];
+    img.src = imgSrcMap[img.src];
   }
 }
 
 // Create a MutationObserver to detect changes to the DOM and update the img elements array.
 const observer = new MutationObserver(() => {
   docImgs = getImgElements();
-  replaceImgSrcWithRandomUrl(docImgs, randomImages);
+  applyImageEffects(docImgs, randomImages);
 });
 
 // Define the MutationObserver configuration to watch for new <img/> elements.
@@ -60,17 +109,26 @@ const observerConfig = {
   characterData: false,
 };
 
-// Start observing the <body> element for changes.
-observer.observe(document.body, observerConfig);
+// // Start observing the <body> element for changes.
+// observer.observe(document.body, observerConfig);
 
-// Generate random image URLs.
+// // Generate random image URLs.
 const randomImages = createRandomImagesArray(contentImageUrl, N_REPEAT);
 
 // Get all the <img/> elements on the page.
 let docImgs = getImgElements();
 
-// Replace the src attribute of each <img/> element with a random URL from the `randomImages` array.
-replaceImgSrcWithRandomUrl(docImgs, randomImages);
+/* v1.0.2 */
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.toggle) {
+    observer.observe(document.body, observerConfig);
+    applyImageEffects(docImgs, randomImages);
+    triggeredOnce = true;
+  } else {
+    observer.disconnect();
+  }
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 

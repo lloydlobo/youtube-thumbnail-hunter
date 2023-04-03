@@ -12,8 +12,7 @@ const welcome = `
 ┃╰┳┳┳━┳┫╰┳━┳┳╮
 ┃┃┃┃┃┃┃┃╭┫┻┫╭╯
 ╰┻┻━┻┻━┻━┻━┻╯
-Welcome to YoutTube Thumbnail Hunter!`;
-// https://fsymbols.com/text-art/
+Welcome to YoutTube Thumbnail Hunter!`; // https://fsymbols.com/text-art/
 console.log(welcome);
 
 // Commit message: Refactor extension icon click event handler and constant declarations
@@ -30,10 +29,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Click event handler for extension icon
 chrome.action.onClicked.addListener(async (tab) => {
-  // console.log(tab.url, "clicked", tab);
-
   if (!YOUTUBE_URLS.some((url) => tab.url.startsWith(url))) {
-    // console.log("no action");
     return;
   }
 
@@ -44,6 +40,8 @@ chrome.action.onClicked.addListener(async (tab) => {
 
   const cssFile = "hunter-mode.css";
   const target = { tabId: tab.id };
+  const message = { toggle: nextState === ON_STATE };
+  chrome.tabs.sendMessage(tab.id, message);
 
   if (nextState === ON_STATE) {
     await chrome.scripting.insertCSS({ files: [cssFile], target });
