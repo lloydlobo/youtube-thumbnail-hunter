@@ -1,0 +1,19 @@
+/* https://github.com/GoogleChrome/chrome-extensions-samples/blob/main/functional-samples/tutorial.focus-mode/focus-mode.css */
+
+body > .scaffold > :is(top-nav, navigation-rail, side-nav, footer),
+main > :not(:last-child),
+main > :last-child > navigation-tree,
+main .toc-container {
+  display: none;
+}
+
+main > :last-child {
+  margin-top: min(10vmax, 10rem);
+  margin-bottom: min(10vmax, 10rem);
+  /* margin-block: min(10vmax, 10rem); */
+}
+
+img {
+  outline: 8px solid red;
+  border: 8px solid red;
+}
