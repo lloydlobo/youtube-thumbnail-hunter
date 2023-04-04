@@ -31,21 +31,24 @@ const shouldReduceTransparency = true;
 const shouldApplyBlur = true;
 
 const opacityReductionPercentage = 90; // %
-const blurValueInPixels = 40;          // px
+const blurValueInPixels = 40; // px
 
 // Construct the URL for a random image of the desired size.
-const contentImageUrl =
-    `${IMAGE_API_URL}/${IMAGE_WIDTH}/${IMAGE_HEIGHT}.${IMAGE_FORMAT}`;
+const contentImageUrl = `${IMAGE_API_URL}/${IMAGE_WIDTH}/${IMAGE_HEIGHT}.${IMAGE_FORMAT}`;
 
 // Set the number of times to repeat the random image URL.
 const N_REPEAT = 6;
 
 // Create an array with the repeated image URLs.
-function createRandomImagesArray(url, count) { return Array(count).fill(url); }
+function createRandomImagesArray(url, count) {
+  return Array(count).fill(url);
+}
 
 // Get all the <img/> elements in the HTML document of any https://youtube.com/*
 // web page.
-function getImgElements() { return document.getElementsByTagName("img"); }
+function getImgElements() {
+  return document.getElementsByTagName("img");
+}
 
 // Get all the <img/> elements in the HTML document of any https://youtube.com/*
 // web page. const docImgs = getImgElements();
@@ -68,8 +71,7 @@ function applyImageEffects(images, urls) {
       CACHE.push(img.src);
       currentImage.src = randomImageUrl;
     } else {
-      if (CACHE.length === images.length)
-        currentImage.src = CACHE[i];
+      if (CACHE.length === images.length) currentImage.src = CACHE[i];
     }
 
     if (shouldRemoveImages) {
@@ -111,10 +113,10 @@ const observer = new MutationObserver(() => {
 
 // Define the MutationObserver configuration to watch for new <img/> elements.
 const observerConfig = {
-  childList : true,
-  subtree : true,
-  attributes : false,
-  characterData : false,
+  childList: true,
+  subtree: true,
+  attributes: false,
+  characterData: false,
 };
 
 // // Start observing the <body> element for changes.
