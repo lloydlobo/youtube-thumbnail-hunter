@@ -15,7 +15,8 @@ const welcome = `
 Welcome to YoutTube Thumbnail Hunter!`; // https://fsymbols.com/text-art/
 console.log(welcome);
 
-// Commit message: Refactor extension icon click event handler and constant declarations
+// Commit message: Refactor extension icon click event handler and constant
+// declarations
 //
 // Define constants for YouTube URLs and extension badge text
 const YOUTUBE_URLS = ["https://youtube.com", "https://www.youtube.com"];
