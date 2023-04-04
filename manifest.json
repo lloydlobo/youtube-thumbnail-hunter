@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "YouTube Thumbnail Hunter",
   "description": "Replace the thumbnails of YouTube videos with random images generated using the picsum.photos API.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "icons": {
     "16": "images/icon-16.png",
     "32": "images/icon-32.png",
